@@ -65,13 +65,11 @@ module I18n::Tasks::Scanners
       re && re =~ line
     end
 
-    VALID_KEY_RE_DYNAMIC = /^(#{VALID_KEY_CHARS}|[:\#{@}\[\]])+$/
-
     def valid_key?(key)
       if @config[:strict]
         super(key)
       else
-        key =~ VALID_KEY_RE_DYNAMIC
+        key =~  /^(#{valid_key_chars()}|[:\#{@}\[\]])+$/
       end
     end
 

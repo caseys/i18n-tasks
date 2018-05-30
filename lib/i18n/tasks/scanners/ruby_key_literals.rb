@@ -1,3 +1,5 @@
+require 'pry'
+
 # frozen_string_literal: true
 
 module I18n::Tasks::Scanners
@@ -20,11 +22,16 @@ module I18n::Tasks::Scanners
       literal
     end
 
-    VALID_KEY_CHARS = /(?:[[:word:]]|[-.?!:;À-ž])/
-    VALID_KEY_RE    = /^#{VALID_KEY_CHARS}+$/
+    def valid_key_chars
+      config[:valid_key_chars] || /(?:[[:word:]]|[-.?!:;À-ž])/
+    end
+
+    def valid_key_re
+      /^#{valid_key_chars}+$/
+    end
 
     def valid_key?(key)
-      key =~ VALID_KEY_RE && !key.end_with?('.')
+      key =~ valid_key_re && !key.end_with?('.')
     end
   end
 end
